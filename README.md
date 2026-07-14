@@ -36,6 +36,7 @@ make
 4. Asignar recurso a misión
 5. Ejecutar misión
 6. Salir
+7. hola 
 
 
 # Binarios y objetos de compilación
@@ -48,3 +49,35 @@ build/
 # Archivos del sistema/editor
 .vscode/
 .DS_Store
+#ifndef RECURSO_H
+#define RECURSO_H
+
+#include <string>
+
+/**
+ * Clase base abstracta para todo recurso administrable por el SGMR
+ * (vehículos o personal). Define el comportamiento polimórfico común.
+ */
+class Recurso {
+protected:
+    int id;
+    std::string nombre;
+    bool disponible;
+
+public:
+    Recurso(int id, const std::string& nombre);
+    virtual ~Recurso();
+
+    // Método polimórfico puro: cada tipo de recurso lo implementa distinto (HU03)
+    virtual void ejecutarAccion() const = 0;
+
+    // Método virtual con implementación base, extensible por los hijos
+    virtual void mostrarInfo() const;
+
+    int getId() const;
+    std::string getNombre() const;
+    bool isDisponible() const;
+    void setDisponible(bool valor);
+};
+
+#endif
