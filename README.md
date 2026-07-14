@@ -49,35 +49,45 @@ build/
 # Archivos del sistema/editor
 .vscode/
 .DS_Store
+
+# codigo del .h de la clase recurso
 #ifndef RECURSO_H
 #define RECURSO_H
 
 #include <string>
 
-/**
- * Clase base abstracta para todo recurso administrable por el SGMR
- * (vehículos o personal). Define el comportamiento polimórfico común.
- */
-class Recurso {
+using namespace std;
+
+/*
+CRC - Clase Recurso
+Responsabilidades:
+- Representar el concepto general de recurso de rescate.
+- Conservar identificador, nombre y disponibilidad.
+- Definir el contrato polimorfico para mostrar informacion y ejecutar una accion.
+Colaboraciones:
+- Mision, Controlador, Vehiculo, Personal.
+*/
+class Recurso
+{
 protected:
-    int id;
-    std::string nombre;
+    string id;
+    string nombre;
     bool disponible;
 
+    void mostrarDatosBase() const;
+
 public:
-    Recurso(int id, const std::string& nombre);
+    Recurso(const string& pId, const string& pNombre);
     virtual ~Recurso();
 
-    // Método polimórfico puro: cada tipo de recurso lo implementa distinto (HU03)
+    const string& getId() const;
+    const string& getNombre() const;
+    bool estaDisponible() const;
+    void setDisponible(bool pDisponible);
+
+    virtual const char* getTipo() const = 0;
+    virtual void mostrarInformacion() const = 0;
     virtual void ejecutarAccion() const = 0;
-
-    // Método virtual con implementación base, extensible por los hijos
-    virtual void mostrarInfo() const;
-
-    int getId() const;
-    std::string getNombre() const;
-    bool isDisponible() const;
-    void setDisponible(bool valor);
 };
 
 #endif
